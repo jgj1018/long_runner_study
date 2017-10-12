@@ -1,0 +1,9 @@
+package abstractfactorypattern.color
+
+import abstractfactorypattern.`interface`.Color
+
+public class Red : Color{
+    override fun fill() {
+        super.fill()
+    }
+}
