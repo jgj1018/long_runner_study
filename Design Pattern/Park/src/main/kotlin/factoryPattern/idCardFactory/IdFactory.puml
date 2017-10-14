@@ -10,7 +10,7 @@ abstract Product{
 use()
 }
 
-IDCardFactory <|-- Factory
+Factory <|-- IDCardFactory
 class IDCardFactory{
 owners
 IDCard createProduct()
@@ -18,7 +18,7 @@ registerProduct()
 getOwners()
 }
 
-IDCard <|-- Product
+Product <|--  IDCard
 class IDCard{
 owner
 use()
