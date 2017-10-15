@@ -8,25 +8,13 @@ class ShapeFactory {
         }
 
         if (shapeType.equals("CIRCLE", ignoreCase = true)) {
-            return object : Shape {
-                override fun draw() {
-                    println("Inside Circle::draw() method.")
-                }
-            }
+            return Circle()
 
         } else if (shapeType.equals("RECTANGLE", ignoreCase = true)) {
-            return object : Shape {
-                override fun draw() {
-                    println("Inside Rectangle::draw() method.")
-                }
-            }
+            return Rectangle()
 
         } else if (shapeType.equals("SQUARE", ignoreCase = true)) {
-            return object : Shape {
-                override fun draw() {
-                    println("Inside Square::draw() method.")
-                }
-            }
+            return Square()
         }
 
         return null
