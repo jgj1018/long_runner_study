@@ -1,0 +1,42 @@
+@startuml
+
+abstract class Builder
+class Director
+class TextBuilder
+class HTMLBuilder
+
+Builder <|-- TextBuilder
+Builder <|-- HTMLBuilder
+
+Builder <--o Director
+class Builder{
+makeTitle()
+makeString()
+makeItems()
+close()
+}
+
+class HTMLBuilder{
+filename
+writer
+makeTitle()
+makeString()
+makeItems()
+close()
+getResult()
+}
+
+class TextBuilder{
+buffer
+makeTitle()
+makeString()
+makeItems()
+close()
+getResult()
+}
+
+class Director{
+builder
+construct()
+}
+@enduml
