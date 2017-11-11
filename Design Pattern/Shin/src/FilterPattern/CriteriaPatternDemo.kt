@@ -72,6 +72,23 @@ fun main(args: Array<String>) {
     println()
     println()
     personsReadOnly.filter { it.gender.equals("MALE", true) }.map { it.toString() }.forEach { println(it) }
+
+
+    println()
+    println()
+    println()
+    println("Map")
+    val personMap = mutableMapOf<Int, Person>()
+    val readOnlyMap:Map<Int, Person> = personMap
+    personMap.put(1, Person("Robert", "Male", "Single"))
+    personMap.put(2, Person("John", "Male", "Married"))
+
+    readOnlyMap.filter {
+        it.value.maritalStatus.equals("Single", true)
+    }.forEach {
+        println(it.value.toString())
+    }
+
 }
 
 fun printPersons(persons:List<Person>) {
