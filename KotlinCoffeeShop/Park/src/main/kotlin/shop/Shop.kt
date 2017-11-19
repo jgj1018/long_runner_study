@@ -1,28 +1,18 @@
 package shop
 
+import helpers.beverageAbstractFactory
+import menu.beverage.Beverage
 import menu.coffee.*
 
 class Shop {
-     val menu:MutableMap<String,Coffee> = HashMap()
-    init {
-        setMenu()
-    }
+     lateinit var menu:Map<String,Beverage>
 
-    private fun setMenu(){
-        val espresso = Espresso()
-        val americano = Americano(espresso)
-        val cafelatte = CafeLatte(americano)
-        val cappucinno = Cappuccino(cafelatte)
-        this.menu.put(espresso.name.toUpperCase(),espresso)
-        this.menu.put(americano.name.toUpperCase(),americano)
-        this.menu.put(cafelatte.name.toUpperCase(),cafelatte)
-        this.menu.put(cappucinno.name.toUpperCase(),cappucinno)
-
+    fun setMenu(menuNames:Set<String>) {
+         menu = beverageAbstractFactory(menuNames)
     }
 
     fun showMenu(){
-        showCoffeeMenu()        
-        
+        showCoffeeMenu()
     }
     
     private fun showCoffeeMenu(){
@@ -32,8 +22,8 @@ class Shop {
         }
     }
     
-    fun takeOrder(name:String, money:Int):Coffee?{
-       var product:Coffee? = null
+    fun takeOrder(name:String, money:Int):Beverage?{
+       var product:Beverage? = null
         try{
 
             product = this.menu.get(name.toUpperCase())

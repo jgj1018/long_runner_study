@@ -1,14 +1,13 @@
 package menu.coffee
 
 import ingredient.Ingredient
+import menu.beverage.Beverage
 
-abstract class Coffee {
-    abstract var ingredients: MutableList<Ingredient>
-    abstract val price:Int
-    abstract val name:String
-    protected abstract fun addIngredient(coffee: Coffee)
+abstract class Coffee:Beverage {
 
-    fun showIngredients(){
+    protected abstract fun addIngredient(coffee: Coffee, neededIngredients:MutableList<Ingredient>)
+
+    override fun showIngredients(){
         print("재료 명 : ")
         this.ingredients.forEach {
             if(ingredients.indexOf(it) == ingredients.size -1){

@@ -3,19 +3,20 @@ package menu.coffee
 import ingredient.CoffeeBean
 import ingredient.Ingredient
 
-open class Espresso:Coffee {
-    override var ingredients: MutableList<Ingredient>
-    override val name: String = "Espresso"
+open class Espresso(override val name:String):Coffee() {
+    override lateinit var ingredients: MutableList<Ingredient>
+
     override val price: Int
         get() = ((ingredients.sumBy { it.price }) * 1.5).toInt()
-    private val coffeeBase:String = "Espresso"
 
-    constructor() {
+    constructor(name:String, neededIngredients:MutableList<Ingredient>) : this(name = name) {
         ingredients = ArrayList()
-        addIngredient(this)
+        addIngredient(this, neededIngredients)
     }
 
-     override fun addIngredient(coffee: Coffee) {
-        this.ingredients.add(CoffeeBean)
+     override fun addIngredient(coffee: Coffee, neededIngredients: MutableList<Ingredient>) {
+         neededIngredients.forEach {
+             this.ingredients.add(it)
+         }
     }
 }
