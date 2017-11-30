@@ -1,0 +1,2 @@
+facade is interface to interact with inner logic class. And
+focuses on good order of using classes
