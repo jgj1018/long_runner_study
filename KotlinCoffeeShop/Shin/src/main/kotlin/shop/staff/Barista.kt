@@ -4,6 +4,11 @@ import order.Order
 import Customer
 import order.OrderManager
 
+/**
+ * 주문을 확인하기
+ * 주문을 만들기
+ * 만든 음료를 내놓기
+ */
 class Barista:OrderListener {
     var orderInProgress :Order? = null
 
@@ -40,6 +45,10 @@ class Barista:OrderListener {
         return orderInProgress == null
     }
 
+    /**
+     * 옵저버 패턴
+     * @param orderListUpdated Orders의 OrderManager가 관리하는 주문 리스트
+     */
     override fun onOrderChanged(orderListUpdated: MutableList<Order>) {
         takeOrder(orderListUpdated.first())
     }

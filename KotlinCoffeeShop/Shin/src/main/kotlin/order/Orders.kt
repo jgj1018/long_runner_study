@@ -18,6 +18,10 @@ class StandardOrder(override val menu:Menu): Order {
 
 object OrderManager {
     private var orderListener: OrderListener? = null
+    /**
+     * Kotlin 옵저버 패턴
+     * 주의 : List는 요소가 추가된다고 해서 바뀌는건 아님
+     */
     var orderList : MutableList<Order> by Delegates.observable(mutableListOf<Order>()) { _, _, new ->
         orderListener?.onOrderChanged(new)
     }

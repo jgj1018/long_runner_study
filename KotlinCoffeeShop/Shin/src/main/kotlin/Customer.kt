@@ -4,10 +4,11 @@ import shop.Shop
 import shop.staff.CounterStaff
 
 /**
- * Customer
- * Customer checks the menu
- * Customer does Order a item
- * Customer retrieve item
+ * 손님
+ * 할 주문을 정하기
+ * 주문하기
+ * 돈 내기
+ * 음료 받기
  */
 class Customer {
     var order:Order? = null
@@ -35,6 +36,6 @@ class Customer {
     }
 
     private fun customerSay(string:String) {
-        println("Customer says \"${string}\"")
+        println("** Customer says \"${string}\" **")
     }
 }

@@ -5,6 +5,13 @@ import menu.menus
 import order.Order
 import order.OrderManager
 
+/**
+ *  카운터 스태프
+ *  주문받기
+ *
+ *  주문을 주문 관리자에 등록하기
+ *
+ */
 class CounterStaff {
     private val orderManager = OrderManager
     private var orderInProgress:Order? = null
