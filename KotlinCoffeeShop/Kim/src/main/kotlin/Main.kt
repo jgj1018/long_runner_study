@@ -7,8 +7,7 @@ fun main(args: Array<String>) {
     test_shop.fetchMenuList(test_shop.shop_id)
     test_shop.showMenuList()
     println("Customer: One Americano please")
-    val test_menu = test_shop.takeOrder(Beverage.Americano.value, 250)
+    test_shop.takeOrder(Order(1, DessertId.CheeseCake.value, 500),
+                        Order(2, BeverageId.OrangeJuice.value, 400))
     println()
-    println("This is the ordered menu below")
-    test_menu?.showMenuDetail()
 }

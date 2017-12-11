@@ -5,8 +5,8 @@ import Menu.*
 class Shop(val shop_id: String) {
 
     var menu_list: Map<String, Menu> = fetchMenuList(shop_id)
-    var order_list: MutableList<Menu> = mutableListOf<Menu>() // not implemented yet regarding management of order_list
-    var coffee_machine: BeverageFactory = BeverageFactory()
+    var order_list: MutableList<Order> = mutableListOf<Order>()
+    var menu_factory: MenuFactory = MenuFactory()
 
     /**
      * fetch menu data from database based on shop_id
@@ -17,10 +17,12 @@ class Shop(val shop_id: String) {
         //not implemented yet, below is temporary logic
         var temp_menu_list = mutableMapOf<String, Menu>()
 
-        temp_menu_list.put(Beverage.Americano.value, NewBeverage(menu_name = "Americano", menu_price = 250))
-        temp_menu_list.put(Beverage.Caffelatte.value, NewBeverage(menu_name ="Caffelatte", menu_price = 300))
-        temp_menu_list.put(Beverage.Cappuccino.value, NewBeverage(menu_name ="Cappuccino", menu_price = 300))
-        temp_menu_list.put(Beverage.Espresso.value, NewBeverage(menu_name ="Espresso", menu_price = 200))
+        temp_menu_list.put(BeverageId.Americano.value, Beverage(menu_name = "Americano", menu_price = 250))
+        temp_menu_list.put(BeverageId.Caffelatte.value, Beverage(menu_name = "Caffelatte", menu_price = 300))
+        temp_menu_list.put(BeverageId.Cappuccino.value, Beverage(menu_name = "Cappuccino", menu_price = 300))
+        temp_menu_list.put(BeverageId.Espresso.value, Beverage(menu_name = "Espresso", menu_price = 200))
+        temp_menu_list.put(BeverageId.OrangeJuice.value, Beverage(menu_name = "OrangeJuice", menu_price = 400))
+        temp_menu_list.put(DessertId.CheeseCake.value, Dessert(menu_name = "CheeseCake", menu_price = 500))
 
         return temp_menu_list
     }
@@ -50,12 +52,15 @@ class Shop(val shop_id: String) {
      * take order from a customer, this method run when there is any order from the console by a customer
      * @return menu instance
      */
-    fun takeOrder(menu_id: String, payment: Int): Menu?
+    fun takeOrder(vararg orders: Order): Menu?
     {
         try {
-            if (isValidOrder(menu_id, payment)) {
-                return this.coffee_machine.makeBeverage(menu_id) ?: throw NullPointerException("Making beverage failed")
+            orders.forEach {
+                if (isValidOrder(it)) {
+                    this.menu_factory.makeProduct(it) ?: throw NullPointerException("Making beverage failed")
+                }
             }
+
         } catch (e: Exception) {
             println(e.message)
         }
@@ -71,15 +76,15 @@ class Shop(val shop_id: String) {
      *
      * @return the boolean result of validation
      */
-    private fun isValidOrder(menu_id: String, payment: Int): Boolean
+    private fun isValidOrder(order: Order): Boolean
     {
         var valid = true
 
-        if (this.menu_list.get(menu_id) === null) {
+        if (this.menu_list.get(order.menu_id) === null) {
             valid = false
             throw NullPointerException("Menu doesn't exist")
         }
-        if (payment < this.menu_list.get(menu_id)!!.menu_price) {
+        if (order.payment < this.menu_list.get(order.menu_id)!!.menu_price) {
             valid = false
             throw Exception("The amount paid is wrong")
         }
