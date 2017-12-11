@@ -1,9 +1,10 @@
-package menu.coffee
+package menu.beverage.coffee
 
-import ingredient.CoffeeBean
 import ingredient.Ingredient
+import menu.Menu
 
 open class Espresso(override val name:String):Coffee() {
+
     override lateinit var ingredients: MutableList<Ingredient>
 
     override val price: Int
@@ -14,9 +15,10 @@ open class Espresso(override val name:String):Coffee() {
         addIngredient(this, neededIngredients)
     }
 
-     override fun addIngredient(coffee: Coffee, neededIngredients: MutableList<Ingredient>) {
+    override fun addIngredient(coffee: Menu, neededIngredients: MutableList<Ingredient>) {
          neededIngredients.forEach {
              this.ingredients.add(it)
          }
     }
+
 }

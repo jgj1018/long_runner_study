@@ -1,11 +1,9 @@
 package menu.beverage
 
 import ingredient.Ingredient
+import menu.Menu
 
-interface Beverage {
-     var ingredients: MutableList<Ingredient>
-     val price:Int
-     val name:String
+interface Beverage: Menu {
 
-    fun showIngredients()
+
 }

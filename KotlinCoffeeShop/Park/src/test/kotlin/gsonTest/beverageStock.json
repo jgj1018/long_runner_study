@@ -1,0 +1,24 @@
+
+{
+    "Cinnamon":{
+      "price": 4,
+      "name": "Cinnamon",
+      "stock": 10
+    },
+    "CoffeeBean":{
+      "price": 40,
+      "name": "CoffeeBean",
+      "stock": 10
+    },
+    "Milk":{
+      "price": 13,
+      "name": "Milk",
+      "stock": 10
+    },
+    "Water":{
+      "price": 4,
+      "name": "Water",
+      "stock": 10
+    }
+
+}

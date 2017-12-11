@@ -1,0 +1,46 @@
+{
+
+    "Bun": {
+      "price": 20,
+      "name": "Bun",
+      "stock": 10
+    },
+    "Cheese": {
+      "price": 30,
+      "name": "Cheese",
+      "stock": 10
+    },
+    "ChickenBreast": {
+      "price": 40,
+      "name": "ChickenBreast",
+      "stock": 10
+    },
+    "Egg": {
+      "price": 10,
+      "name": "Egg",
+      "stock": 10
+    },
+    "Ham": {
+      "price": 25,
+      "name": "Ham",
+      "stock": 10
+    },
+    "Lettuce": {
+      "price": 5,
+      "name": "Lettuce",
+      "stock": 10
+    },
+    "SandwichBread": {
+      "price": 8,
+      "name": "SandwichBread",
+      "stock": 10
+    },
+    "Tomato": {
+      "price": 15,
+      "name": "Tomato",
+      "stock": 10
+    }
+
+
+
+}
