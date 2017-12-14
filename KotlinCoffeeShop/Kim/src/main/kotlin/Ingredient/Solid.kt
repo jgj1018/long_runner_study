@@ -9,6 +9,6 @@ interface Solid {
 class CoffeeBean: Solid {
     override val ingredient_id: String = "i001"
     override val ingredient_name: String = "Coffee bean"
-    override var stock: Int = 0
+    override var stock: Int = 10
 }
 

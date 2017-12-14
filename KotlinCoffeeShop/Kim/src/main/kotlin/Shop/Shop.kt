@@ -1,12 +1,14 @@
 package Shop
 
 import Menu.*
+import Common.*
+import Product.*
 
 class Shop(val shop_id: String) {
 
     var menu_list: Map<String, Menu> = fetchMenuList(shop_id)
     var order_list: MutableList<Order> = mutableListOf<Order>()
-    var menu_factory: MenuFactory = MenuFactory()
+    var menu_factory: ProductFactory = ProductFactory()
 
     /**
      * fetch menu data from database based on shop_id
@@ -17,12 +19,12 @@ class Shop(val shop_id: String) {
         //not implemented yet, below is temporary logic
         var temp_menu_list = mutableMapOf<String, Menu>()
 
-        temp_menu_list.put(BeverageId.Americano.value, Beverage(menu_name = "Americano", menu_price = 250))
-        temp_menu_list.put(BeverageId.Caffelatte.value, Beverage(menu_name = "Caffelatte", menu_price = 300))
-        temp_menu_list.put(BeverageId.Cappuccino.value, Beverage(menu_name = "Cappuccino", menu_price = 300))
-        temp_menu_list.put(BeverageId.Espresso.value, Beverage(menu_name = "Espresso", menu_price = 200))
-        temp_menu_list.put(BeverageId.OrangeJuice.value, Beverage(menu_name = "OrangeJuice", menu_price = 400))
-        temp_menu_list.put(DessertId.CheeseCake.value, Dessert(menu_name = "CheeseCake", menu_price = 500))
+        temp_menu_list.put(BeverageId.Americano.value, BeverageMenu(menu_name = "Americano", menu_price = 250))
+        temp_menu_list.put(BeverageId.Caffelatte.value, BeverageMenu(menu_name = "Caffelatte", menu_price = 300))
+        temp_menu_list.put(BeverageId.Cappuccino.value, BeverageMenu(menu_name = "Cappuccino", menu_price = 300))
+        temp_menu_list.put(BeverageId.Espresso.value, BeverageMenu(menu_name = "Espresso", menu_price = 200))
+        temp_menu_list.put(BeverageId.OrangeJuice.value, BeverageMenu(menu_name = "OrangeJuice", menu_price = 400))
+        temp_menu_list.put(DessertId.CheeseCake.value, DessertMenu(menu_name = "CheeseCake", menu_price = 500))
 
         return temp_menu_list
     }
@@ -52,12 +54,13 @@ class Shop(val shop_id: String) {
      * take order from a customer, this method run when there is any order from the console by a customer
      * @return menu instance
      */
-    fun takeOrder(vararg orders: Order): Menu?
+    fun takeOrder(vararg orders: Order): Product?
     {
         try {
             orders.forEach {
                 if (isValidOrder(it)) {
                     this.menu_factory.makeProduct(it) ?: throw NullPointerException("Making beverage failed")
+                    this.order_list.add(it)
                 }
             }
 

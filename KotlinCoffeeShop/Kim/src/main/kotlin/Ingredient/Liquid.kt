@@ -9,5 +9,5 @@ interface Liquid {
 class Water: Liquid {
     override val ingredient_id: String = "i002"
     override val ingredient_name: String = "Water"
-    override var stock: Int = 0
+    override var stock: Int = 10
 }
