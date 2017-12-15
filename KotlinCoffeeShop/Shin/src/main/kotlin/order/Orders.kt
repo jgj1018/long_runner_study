@@ -1,6 +1,7 @@
 package order
 
 import menu.Menu
+import menu.MenuCategory
 import shop.staff.OrderListener
 import kotlin.properties.Delegates
 
@@ -22,7 +23,7 @@ object OrderManager {
      * Kotlin 옵저버 패턴
      * 주의 : List는 요소가 추가된다고 해서 바뀌는건 아님
      */
-    var orderList : MutableList<Order> by Delegates.observable(mutableListOf<Order>()) { _, _, new ->
+    private var orderList : MutableList<Order> by Delegates.observable(mutableListOf<Order>()) { _, _, new ->
         orderListener?.onOrderChanged(new)
     }
 
@@ -31,8 +32,9 @@ object OrderManager {
         orderList = orderList.toMutableList()
     }
 
-    fun removeFirstOrder() {
-        orderList.removeAt(0)
+    fun removeFirstOrder(category: MenuCategory) {
+        orderList.remove(this.orderList.first { it.menu.category == category })
+        orderList = orderList.toMutableList()
     }
 
     fun updateListener(newListener: OrderListener) {

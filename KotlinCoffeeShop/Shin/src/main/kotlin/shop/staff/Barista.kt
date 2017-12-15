@@ -2,6 +2,7 @@ package shop.staff
 
 import order.Order
 import Customer
+import menu.MenuCategory
 import order.OrderManager
 
 /**
@@ -21,11 +22,10 @@ class Barista:OrderListener {
     }
 
     fun makeBeverage() {
-        println("Now Making ${orderInProgress?.menu?.menuName}...")
+        println(orderInProgress?.menu.toString())
     }
 
     fun passBeverageToCustomer(customer: Customer) {
-        println("Here is ${orderInProgress?.menu?.menuName}")
         if (customer.getBeverage(orderInProgress?.menu)) {
             println("Your Welcome")
             orderInProgress = null
@@ -34,7 +34,7 @@ class Barista:OrderListener {
     }
 
     private fun deleteCompleteOrderFromOrderList() {
-        OrderManager.removeFirstOrder()
+        OrderManager.removeFirstOrder(MenuCategory.Coffee)
     }
 
     private fun changeStateToIdle() {
@@ -50,6 +50,28 @@ class Barista:OrderListener {
      * @param orderListUpdated Orders의 OrderManager가 관리하는 주문 리스트
      */
     override fun onOrderChanged(orderListUpdated: MutableList<Order>) {
-        takeOrder(orderListUpdated.first())
+        if (orderListUpdated.isEmpty()) {
+            return
+        }
+
+        if (!areThereCoffeeOrderIn(orderListUpdated)) return
+
+        val firstCapableOrder = seekOldestCoffeeOrder(orderListUpdated) ?: return
+        println("firstOrder: $firstCapableOrder")
+        takeOrder(firstCapableOrder)
+        makeBeverage()
+        deleteCompleteOrderFromOrderList()
+        changeStateToIdle()
+    }
+
+    private fun seekOldestCoffeeOrder(orderList: MutableList<Order>):Order? {
+        if (orderList.isNotEmpty()) {
+            return orderList.first { it.menu.category == MenuCategory.Coffee  }
+        }
+        return null
+    }
+
+    private fun areThereCoffeeOrderIn(orderList: MutableList<Order>):Boolean {
+        return orderList.any { it.menu.category == MenuCategory.Coffee }
     }
 }

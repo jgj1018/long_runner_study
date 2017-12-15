@@ -1,9 +1,9 @@
 package shop.staff
 
-import menu.Espresso
-import menu.menus
 import order.Order
 import order.OrderManager
+import shop.POS
+import shop.Shop
 
 /**
  *  카운터 스태프
@@ -12,7 +12,7 @@ import order.OrderManager
  *  주문을 주문 관리자에 등록하기
  *
  */
-class CounterStaff {
+class CounterStaff(var shop: Shop, var pos: POS) {
     private val orderManager = OrderManager
     private var orderInProgress:Order? = null
 
@@ -22,26 +22,20 @@ class CounterStaff {
 
     fun sayMenu() {
         println("OurMenu is ...")
-        menus.values().forEach { println(it.name) }
+        shop.menuList.sayAllMenu()
         println("(End Of Menu)")
     }
 
     fun getOrder(order: Order?):Boolean {
-        if (isIdle()) {
+        if (!isIdle()) {
+            return false
+        }
+        if (order?.menu!!.canBeMade(shop.storage)) {
             orderInProgress = order
             return true
         }
+
         return false
-    }
-
-    fun sayPrice() {
-        println("Price is $${calculatePrice()}")
-    }
-
-    fun getMoney(customersPay:Double) {
-        if (orderInProgress?.menu?.price == customersPay) {
-            println("Thank you")
-        }
     }
 
     fun inputOrder() {
@@ -57,10 +51,7 @@ class CounterStaff {
         return orderInProgress == null
     }
 
-    private fun calculatePrice():Double {
-        val menu = orderInProgress?.menu
-
-        return menu?.price ?: 0.0
+    fun setPOS(pos: POS) {
+        this.pos = pos
     }
-
 }
