@@ -16,3 +16,10 @@ enum class BeverageId (val value: String) {
 enum class DessertId (val value: String) {
     CheeseCake("m101")
 }
+
+enum class IngredientId (val value: String) {
+    Water("i001"),
+    Coffeebean("i002"),
+    Cheese("i003"),
+    Bread("i004")
+}

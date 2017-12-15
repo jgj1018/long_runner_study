@@ -4,25 +4,20 @@ import Shop.Order
 import Common.*
 import Ingredient.*
 
-class ProductFactory {
-
-    var coffeebean_stock: CoffeeBean = CoffeeBean()
-    var water_stock: Water = Water()
+class ProductFactory(var stocks: MutableMap<String, Ingredient> ) {
 
     fun makeProduct(order: Order): Product?
     {
         var product: Product? = null
 
-        if (checkStockStatus(order.menu_id)) {
-            when (order.menu_id) {
-                BeverageId.Americano.value  -> product = Beverage(product_name = "Americano")
-                BeverageId.Caffelatte.value -> product = Beverage(product_name = "Caffelatte")
-                BeverageId.Cappuccino.value -> product = Beverage(product_name = "Cappuccino")
-                BeverageId.Espresso.value   -> product = Beverage(product_name = "Espresso")
-                BeverageId.OrangeJuice.value-> product = Beverage(product_name = "OrangeJuice")
-                DessertId.CheeseCake.value  -> product = Dessert(product_name = "CheeseCake")
-                else                      -> println("Unknown Menu")
-            }
+        when (order.menu_id) {
+            BeverageId.Americano.value  -> product = Beverage(product_name = "Americano")
+            BeverageId.Caffelatte.value -> product = Beverage(product_name = "Caffelatte")
+            BeverageId.Cappuccino.value -> product = Beverage(product_name = "Cappuccino")
+            BeverageId.Espresso.value   -> product = Beverage(product_name = "Espresso")
+            BeverageId.OrangeJuice.value-> product = Beverage(product_name = "OrangeJuice")
+            DessertId.CheeseCake.value  -> product = Dessert(product_name = "CheeseCake")
+            else                        -> println("Unknown Menu")
         }
 
         if (product is Product) {
@@ -31,10 +26,5 @@ class ProductFactory {
             order.order_status = false
         }
         return product
-    }
-
-    fun checkStockStatus(menu_id: String): Boolean
-    {
-        return true
     }
 }

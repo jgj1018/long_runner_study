@@ -7,11 +7,12 @@ interface Menu {
     val menu_id: String
     val menu_name: String
     val menu_price: Int
+    val menu_recipe: Array<String>
 
     fun showMenuDetail()
 }
 
-class BeverageMenu(override val menu_name: String, override val menu_price: Int) : Menu {
+class BeverageMenu(override val menu_name: String, override val menu_price: Int, override val menu_recipe: Array<String>) : Menu {
     override val menu_id: String = BeverageId.valueOf(this.menu_name).value
 
     override fun showMenuDetail() {
@@ -19,7 +20,7 @@ class BeverageMenu(override val menu_name: String, override val menu_price: Int)
     }
 }
 
-class DessertMenu(override val menu_name: String, override val menu_price: Int) : Menu {
+class DessertMenu(override val menu_name: String, override val menu_price: Int, override val menu_recipe: Array<String>) : Menu {
     override val menu_id: String = DessertId.valueOf(this.menu_name).value
 
     override fun showMenuDetail() {
