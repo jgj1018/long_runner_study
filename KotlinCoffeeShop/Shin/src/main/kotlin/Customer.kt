@@ -23,8 +23,8 @@ class Customer {
     }
 
     fun payPriceOfOrder(counterStaff: CounterStaff) {
-        customerSay("here is ${order?.menu?.price}")
-        counterStaff.getMoney(order?.menu?.price ?: 0.0)
+        //customerSay("here is ${order?.menu?.price}")
+        //counterStaff.getMoney(order?.menu?.price ?: 0.0)
     }
 
     fun getBeverage(menu:Menu?):Boolean {

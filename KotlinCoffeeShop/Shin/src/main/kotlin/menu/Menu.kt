@@ -1,32 +1,69 @@
 package menu
 
-interface Menu {
-    val menuName: MenuName
-    val price:Double
+import ingredients.Ingredient
+import shop.Storage
+import kotlin.math.ceil
+
+/*
+메뉴의 구성요소는?
+ * 메뉴 이름
+ * 메뉴의 가격
+ * 메뉴의 재료
+ * 재료의 사용량
+ * 메뉴의 재고 상태(재료가 하나라도 부족하면 재고 부족)
+ */
+
+enum class MenuCategory {
+    Coffee,
+    Beverage,
+    Food
 }
 
-abstract class standardMenu(override val menuName: MenuName, override val price: Double): Menu {
+class Menu(val name:String, val category: MenuCategory) {
+    private var recipe:Recipe = Recipe()
+    private var margin:Double = 1.3
 
-}
+    fun canBeMade(storage: Storage):Boolean = recipe.canBeMade(storage)
 
-data class Espresso(override val menuName:MenuName = MenuName("Espresso"), override var price: Double = 1.00) :standardMenu(MenuName("Espresso"), 1.00)
-data class CaffeLatte(override val menuName:MenuName = MenuName("CaffeLatte"), override var price: Double = 1.00) :standardMenu(MenuName("CaffeLatte"), 1.00)
-data class Cappuchino(override val menuName:MenuName = MenuName("Cappuchino"), override var price: Double = 1.00) :standardMenu(MenuName("Cappuchino"), 1.00)
-data class Americano(override val menuName:MenuName = MenuName("Americano"), override var price: Double = 1.00) :standardMenu(MenuName("Americano"), 1.00)
+    fun getPrice():Double {
+        return ceil(recipe.getTotalCost() * margin)
+    }
 
-class MenuName(private var name:String) {
+    fun changeMargin(newMargin : Double) {
+        margin = newMargin
+    }
+
+    fun setRecipe(recipe: Recipe) {
+        this.recipe = recipe
+    }
+
     override fun toString(): String {
         return name
     }
-
-    override fun equals(other: Any?): Boolean {
-        return this.name == (other as MenuName).name
-    }
 }
 
-enum class menus(menu: Menu) {
-    Espresso(menu.Espresso()),
-    CaffeLatte(menu.CaffeLatte()),
-    Cappuchino(menu.Cappuchino()),
-    Americano(menu.Americano())
+class Recipe() {
+    private val ingredients = mutableMapOf<Ingredient, Int>()
+
+    fun getTotalCost():Double {
+        return ingredients.map { it.key.price }.sum()
+    }
+
+    fun addIngredient(ingredient: Ingredient, units: Int) {
+        ingredients.put(ingredient, units)
+    }
+
+    fun canBeMade(storage: Storage):Boolean = ingredients.all { storage.hasIngredient(it.key.name, it.value) }
+}
+
+class MenuList() {
+    private var menuList = mutableListOf<Menu>()
+
+    fun sayAllMenu() {
+        menuList.forEach { println(it.name) }
+    }
+
+    fun addMenu(menu: Menu) {
+        menuList.add(menu)
+    }
 }
