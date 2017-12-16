@@ -57,13 +57,17 @@ class Recipe() {
 }
 
 class MenuList() {
-    private var menuList = mutableListOf<Menu>()
+    private var menuList = mutableMapOf<String, Menu>()
 
     fun sayAllMenu() {
-        menuList.forEach { println(it.name) }
+        menuList.forEach { println(it.value.name) }
     }
 
     fun addMenu(menu: Menu) {
-        menuList.add(menu)
+        menuList.put(menu.name, menu)
+    }
+
+    fun getMenu(menuName: String):Menu? {
+        return menuList[menuName]
     }
 }

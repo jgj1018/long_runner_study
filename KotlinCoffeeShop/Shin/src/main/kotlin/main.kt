@@ -12,32 +12,13 @@ fun main(args: Array<String>) {
     val counterStaff = shop.counterStaff
     val barista = shop.barista
     val menuList = shop.menuList
-    val storage = shop.storage
-
-
-    val coffeeIngredientOne = Ingredient("CoffeeIngredientOne", 1.00)
-    val coffeeIngredientTwo = Ingredient("CoffeeIngredientTwo", 2.00)
-
-    storage.addNewStock(Stock(coffeeIngredientOne, 2))
-    storage.addNewStock(Stock(coffeeIngredientTwo, 2))
-
-    val espresso = Menu("Espresso", MenuCategory.Coffee)
-    val recipeOfEspresso = Recipe()
-    recipeOfEspresso.addIngredient(coffeeIngredientOne, 1)
-    recipeOfEspresso.addIngredient(coffeeIngredientTwo, 1)
-
-    espresso.setRecipe(recipeOfEspresso)
-
-    menuList.addMenu(espresso)
 
     OrderManager.updateListener(barista)
     counterStaff.sayWelcome()
     counterStaff.sayMenu()
-    if (counterStaff.getOrder(StandardOrder(espresso))) {
+    if (counterStaff.getOrder(StandardOrder(menuList.getMenu("Espresso")!!))) {
         counterStaff.inputOrder()
     }
-
-    //barista.makeBeverage()
 
     counterStaff.getOrder(StandardOrder(Menu("Cake", MenuCategory.Food)))
     counterStaff.inputOrder()
@@ -46,5 +27,4 @@ fun main(args: Array<String>) {
         counterStaff.inputOrder()
     }
 
-    //barista.makeBeverage()
 }
