@@ -84,14 +84,22 @@ class CsvParser {
                    }
                    ',' -> {
                        //  ,,, 일 경우
-                      if(index == 0 || index > 0 && strarray.get(index-1) == ','){
-                            perRowArray.add("")
-                        }else if(readingEscapeBlockFlag == true){
-                            currentBlock!!.append(value)
-                        }else if(readingEscapeBlockFlag == false){
-                            perRowArray.add(currentBlock.toString())
-                            currentBlock = StringBuilder()
-                        }
+                       if(index == 0 || index > 0 && strarray.get(index-1) == ','){
+                           perRowArray.add("")
+                           if(index == strarraySize-1) {
+                               perRowArray.add("")
+                           }
+                       }else if(readingEscapeBlockFlag == true){
+                           currentBlock!!.append(value)
+                       }else if(readingEscapeBlockFlag == false){
+
+                           perRowArray.add(currentBlock.toString())
+
+                           if(index == strarraySize-1) {
+                               perRowArray.add("")
+                           }
+                           currentBlock = StringBuilder()
+                       }
                    }
 
                    else -> {
