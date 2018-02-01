@@ -24,27 +24,31 @@ class CsvReaderTest{
         file.writeText("123,1989/05/24, \n \"TEST\"")
         Assert.assertEquals("123", csvReader.getData())
         Assert.assertEquals("1989/05/24", csvReader.getData())
-        Assert.assertEquals("TEST", csvReader.getData())
+        csvReader.getData()
+        Assert.assertEquals("\"TEST\"", csvReader.getData())
     }
 
     @Test
     fun getCommaValueTest(){
-        file.writeText("\"T FF\",1")
-        Assert.assertEquals("T FF", csvReader.getData())
+        file.writeText("\"T, FF\",1")
+        Assert.assertEquals("\"T, FF\"", csvReader.getData())
 
     }
 
     @Test
     fun getDoubleQuoteValueTest(){
-        file.writeText("\"\"Test\"\"")
+        file.writeText("10, \"Test\", True")
+        Assert.assertEquals("10", csvReader.getData())
+
         Assert.assertEquals("\"Test\"", csvReader.getData())
+        Assert.assertEquals("True", csvReader.getData())
 
     }
 
     @Test
     fun getDoubleQuoteAndCommaValueTest(){
         file.writeText("\"\"Test, T\"\",1")
-        Assert.assertEquals("\"Test, T\"", csvReader.getData())
+        Assert.assertEquals("\"\"Test, T\"\"", csvReader.getData())
 
     }
     @Test
@@ -59,11 +63,11 @@ class CsvReaderTest{
     fun getOnlyDoubleQuoteTest(){
         file.writeText("2018/01/14,\",\",,,\" \"\" \"")
         csvReader.getData()
-        Assert.assertEquals(",", csvReader.getData())
+        Assert.assertEquals("\",\"", csvReader.getData())
         csvReader.getData()
         csvReader.getData()
 
-        Assert.assertEquals(" \"\" ", csvReader.getData())
+        Assert.assertEquals("\" \"\" \"", csvReader.getData())
 
     }
 
@@ -81,11 +85,11 @@ class CsvReaderTest{
     fun getWithLineFeedTest(){
         file.writeText("2018/01/14,\",\",,,\" \"\" \"\n2018/01/15")
         Assert.assertEquals("2018/01/14", csvReader.getData())
-        Assert.assertEquals(",", csvReader.getData())
+        Assert.assertEquals("\",\"", csvReader.getData())
         Assert.assertEquals("", csvReader.getData())
         Assert.assertEquals("", csvReader.getData())
 
-        Assert.assertEquals(" \"\" ", csvReader.getData())
+        Assert.assertEquals("\" \"\" \"", csvReader.getData())
         Assert.assertEquals("2018/01/15", csvReader.getData())
 
     }

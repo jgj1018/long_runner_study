@@ -1,7 +1,7 @@
 package stream
 
 class DataBuffer {
-    var buffer:CharArray = CharArray(2)
+    var buffer:CharArray = CharArray(4)
     var offset = 0
     var pos = 0
 
@@ -18,7 +18,7 @@ class DataBuffer {
 
 
     fun reNewBuffer(){
-        this.buffer = CharArray(2)
+        this.buffer = CharArray(4)
         this.pos = 0
 
     }
