@@ -8,6 +8,8 @@ import CsvParser
 import inner.*
 import org.junit.Assert
 import org.junit.Test
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.*
 
 class csvParserTest {
@@ -66,12 +68,13 @@ class csvParserTest {
     @Test
     fun parseToInstance(){
         prepareReader()
-        file.writeText("10, \"Test\", True")
-
-        val result = csvParser.parseFromCsv(TestObject::class.java)
+        file.writeText("10, \"Test\", True, 2018/01/14")
+        val lTime: LocalDate? = changeToDateOrNull("2018/01/14")
+        val result = csvParser.parseFromCsv(TestObject::class.java)!!
         Assert.assertEquals(10 , result.iValue)
         Assert.assertEquals("Test" , result.sValue)
         Assert.assertEquals(true , result.bvalue)
+        Assert.assertEquals( lTime, result.dvalue)
 
     }
 
