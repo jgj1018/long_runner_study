@@ -69,7 +69,10 @@ class ValueWrapper(dest:String) {
             try {
                 trimableString = changeDuplicatedDoubleQuoteToSingle(trimableString)
 
-            } catch (e : Exception){
+            }catch (e : BadCsvFormatException){
+                e.printStackTrace()
+            }
+            catch (e : Exception){
                 e.printStackTrace()
                 throw ReachToEOFException()
             }finally {
@@ -83,7 +86,27 @@ class ValueWrapper(dest:String) {
 
 
     private fun changeDuplicatedDoubleQuoteToSingle(targetString: String):String{
+        if (isBadDuobleQuoteFormat(targetString)){
+            throw BadCsvFormatException()
+        }
         return targetString.replace("\"\"","\"")
+
+    }
+
+    private fun isBadDuobleQuoteFormat(targetString: String): Boolean {
+        val quoteIndexList:MutableList<Int> =  ArrayList()
+
+        var i = 0
+        do {
+
+            i =  targetString.indexOf('"',i)
+            if (i != -1){
+                quoteIndexList.add(i)
+                i++
+            }
+        }while (i < targetString.length && i != -1)
+
+        return (quoteIndexList.size % 2 != 0)
 
     }
 

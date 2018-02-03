@@ -29,7 +29,10 @@ class CsvParser(dest:String) {
 
         }catch (e:NullPointerException){
 
-        }finally {
+        }catch (e:BadCsvFormatException){
+            e.printStackTrace()
+        }
+        finally {
             return result
 
         }
@@ -50,7 +53,7 @@ class CsvParser(dest:String) {
                 if( constructor.parameterCount == valueQueue.size ){
                      result = makeInstance(constructor) as T
                 }else{
-
+                    throw BadCsvFormatException()
                 }
             }
         }
@@ -95,6 +98,8 @@ class CsvParser(dest:String) {
     }
 
 
+
+
     private fun parseToPrimative(typeName:String, param:WrappingObject):Any{
         return when(typeName){
 
@@ -108,6 +113,12 @@ class CsvParser(dest:String) {
             }
         }
     }
+
+
+
+
+
+
 
 
 }

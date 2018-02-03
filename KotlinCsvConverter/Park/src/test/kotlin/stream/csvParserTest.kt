@@ -30,7 +30,7 @@ class csvParserTest {
     @Test
     fun getDataTest(){
         prepareReader()
-        file.writeText("123,1989/05/24, \n \"TEST\"")
+        file.writeText("123,1989/05/24, \n \"TE\"ST\"")
         csvParser.valueQueue = csvParser.valueWrapper.getParams()!!
         val first:NumberObject = csvParser.valueQueue.remove() as NumberObject
         val second:DateObject =  csvParser.valueQueue.remove() as DateObject

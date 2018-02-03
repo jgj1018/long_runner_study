@@ -6,6 +6,6 @@ fun main(args: Array<String>) {
 
     val target = csvParser.parseFromCsv(TargetObject::class.java)
 
-//    println(csvParser.objectToCsvString(target))
+    println("D")
 
 }
