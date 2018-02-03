@@ -1,3 +1,4 @@
+import exceptions.BadCsvFormatException
 import inner.*
 import stream.*
 import java.lang.reflect.Constructor
@@ -29,8 +30,6 @@ class CsvParser(dest:String) {
 
         }catch (e:NullPointerException){
 
-        }catch (e:BadCsvFormatException){
-            e.printStackTrace()
         }
         finally {
             return result
@@ -53,7 +52,13 @@ class CsvParser(dest:String) {
                 if( constructor.parameterCount == valueQueue.size ){
                      result = makeInstance(constructor) as T
                 }else{
-                    throw BadCsvFormatException()
+                    try{
+                        throw BadCsvFormatException()
+
+                    }catch (e : BadCsvFormatException){
+                        e.printStackTrace()
+                        valueWrapper.close()
+                    }
                 }
             }
         }

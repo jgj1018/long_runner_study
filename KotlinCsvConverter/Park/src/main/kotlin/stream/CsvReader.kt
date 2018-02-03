@@ -1,5 +1,6 @@
 package stream
 
+import exceptions.ReachToEOFException
 import java.io.FileReader
 import java.util.*
 import java.util.regex.Pattern
@@ -51,7 +52,7 @@ class CsvReader(dest:String){
 
            text =this.getValidChar()
 
-       }catch (e:ReachToEOFException){
+       }catch (e: ReachToEOFException){
 
        }finally {
 

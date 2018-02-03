@@ -1,5 +1,7 @@
 package stream
 
+import exceptions.BadCsvFormatException
+import exceptions.ReachToEOFException
 import inner.*
 import java.util.*
 
@@ -17,7 +19,7 @@ class ValueWrapper(dest:String) {
                 valueQueue.offer(wrapObject)
             }
 
-        }catch (e :ReachToEOFException){
+        }catch (e : ReachToEOFException){
             csvReader.closeReader()
 
             return null
@@ -108,6 +110,11 @@ class ValueWrapper(dest:String) {
 
         return (quoteIndexList.size % 2 != 0)
 
+    }
+
+
+    fun close(){
+        this.csvReader.closeReader()
     }
 
 }
