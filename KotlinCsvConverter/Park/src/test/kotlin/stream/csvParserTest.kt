@@ -31,14 +31,14 @@ class csvParserTest {
     fun getDataTest(){
         prepareReader()
         file.writeText("123,1989/05/24, \n \"TEST\"")
-        csvParser.getParams()
+        csvParser.valueQueue = csvParser.valueWrapper.getParams()!!
         val first:NumberObject = csvParser.valueQueue.remove() as NumberObject
         val second:DateObject =  csvParser.valueQueue.remove() as DateObject
+        csvParser.valueQueue = csvParser.valueWrapper.getParams()!!
+
         csvParser.valueQueue.remove()
-        csvParser.getParams()
 
         val third:StringObject =  csvParser.valueQueue.remove() as StringObject
-        csvParser.getParams()
 
         Assert.assertEquals(123.0, first.value, Double.MAX_VALUE)
         Assert.assertEquals(1989, second.value.year)
@@ -52,7 +52,7 @@ class csvParserTest {
     fun allNullObjectTest(){
         prepareReader()
         file.writeText(",,,")
-        csvParser.getParams()
+        csvParser.valueQueue = csvParser.valueWrapper.getParams()!!
         Assert.assertEquals(3,csvParser.valueQueue.size)
 
         val first = csvParser.valueQueue.remove()
