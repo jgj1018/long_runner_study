@@ -1,11 +1,15 @@
 import csvobjects.CSVObject
 import csvobjects.Record
+import exception.DoubleQuotationValidateException
 import java.io.File
 
 class Parser {
 
-
     fun makeObject(rawString: String):CSVObject {
+        if (!validateDoubleQuotation(rawString)) {
+            throw DoubleQuotationValidateException()
+        }
+
         val list = makeRecordList(rawString)
         println("Size: ${list.size}")
         list.forEach {
@@ -14,14 +18,16 @@ class Parser {
         return CSVObject(rawString, list)
     }
 
-    fun makeRecordList(rawString: String): MutableList<Record> {
-        var doubleQuotationCount = 0;
+    private fun validateDoubleQuotation(rawString: String):Boolean {
+        return rawString.count { it == CSVToken.DOUBLE_QUOTATION } % 2 == 0
+    }
+
+    private fun makeRecordList(rawString: String): MutableList<Record> {
         var state = "START"
-        var indexOfEscapedDoubleQuotation = 0;
 
         var escapedDoubleQuotation = false;
 
-        var lineStartIndexList = mutableListOf<Int>()
+        val lineStartIndexList = mutableListOf<Int>()
         lineStartIndexList.add(0)
 
         for ((index, char) in rawString.withIndex()) {

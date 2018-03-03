@@ -1,5 +1,7 @@
 package csvobjects
 
+import exception.DoubleQuotationValidateException
+
 /**
  * 행
  */
@@ -14,9 +16,7 @@ class Record(private val rawLine: String, private val fieldList: MutableList<Fie
     }
 
     private fun addField(string: String?) {
-        println("string: $string")
         val field = Field(string)
-        println("field: $field")
         if (field == null) {
             println("field null")
         }
@@ -38,7 +38,7 @@ class Record(private val rawLine: String, private val fieldList: MutableList<Fie
     private fun sliceFirstField(rawString: String): Pair<String, String> {
 
         if (rawString.count { it == CSVToken.DOUBLE_QUOTATION }.isOdd()) {
-            throw Exception()
+            throw DoubleQuotationValidateException()
         }
 
         val commaIndexes = rawString.withIndex().filter { it.value == CSVToken.COMMA }.map { it -> it.index }
@@ -65,4 +65,6 @@ class Record(private val rawLine: String, private val fieldList: MutableList<Fie
 
     private fun Int.isOdd(): Boolean = this % 2 == 1
     private fun Int.isEven(): Boolean = this % 2 == 0
+
+    fun numberOfFields() = fieldList.size
 }
